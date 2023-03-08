@@ -23,7 +23,7 @@ class IsInstructorOrReadOnly(permissions.BasePermission):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [IsInstructorOrReadOnly]
+    # permission_classes = [IsInstructorOrReadOnly]
 
     @action(detail=True, methods=['get'])
     def modules(self, request, pk=None):
@@ -36,7 +36,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 class ModuleViewSet(viewsets.ModelViewSet):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [IsInstructorOrReadOnly]
+    # permission_classes = [IsInstructorOrReadOnly]
 
     @action(detail=True, methods=['get'])
     def lessons(self, request, pk=None):
@@ -49,7 +49,7 @@ class ModuleViewSet(viewsets.ModelViewSet):
 class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsInstructorOrReadOnly]
+    # permission_classes = [IsInstructorOrReadOnly]
 
     @action(detail=True, methods=['get'])
     def contents(self, request, pk=None):
@@ -62,4 +62,4 @@ class LessonViewSet(viewsets.ModelViewSet):
 class ContentViewSet(viewsets.ModelViewSet):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
-    permission_classes = [IsInstructorOrReadOnly]
+    # permission_classes = [IsInstructorOrReadOnly]
