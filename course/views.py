@@ -27,39 +27,32 @@ class CourseViewSet(viewsets.ModelViewSet):
     filter_backends=[DjangoFilterBackend,SearchFilter]
     filterset_class=CourseFilter
     search_fields=['title','description','instructor__first_name','instructor__last_name']
-    # permission_classes = [IsInstructorOrReadOnly]
-
-    # @action(detail=True, methods=['get'])
-    # def modules(self, request, pk=None):
-    #     course = self.get_object()
-    #     modules = course.module_set.all()
-    #     serializer = ModuleSerializer(modules, many=True)
-    #     return Response(serializer.data)
-
-
+    
 class ModuleViewSet(viewsets.ModelViewSet):
-    queryset = Module.objects.all()
     serializer_class = ModuleSerializer
     # permission_classes = [IsInstructorOrReadOnly]
-
     def get_queryset(self):
         return Module.objects.filter(course_id=self.kwargs['course_pk'])
-
+    def get_serializer_context(self):
+        return {'course_id':self.kwargs['course_pk']}
 
 class LessonViewSet(viewsets.ModelViewSet):
-    queryset = Lesson.objects.all()
+    
     serializer_class = LessonSerializer
+    def get_queryset(self):
+        return Lesson.objects.filter(module_id=self.kwargs['module_pk'])
+    
+    def get_serializer_context(self):
+        return {'module_id':self.kwargs['module_pk']}
     # permission_classes = [IsInstructorOrReadOnly]
 
-    @action(detail=True, methods=['get'])
-    def contents(self, request, pk=None):
-        lesson = self.get_object()
-        contents = lesson.content_set.all()
-        serializer = ContentSerializer(contents, many=True)
-        return Response(serializer.data)
-
+    
 
 class ContentViewSet(viewsets.ModelViewSet):
-    queryset = Content.objects.all()
+    
     serializer_class = ContentSerializer
+    def get_queryset(self):
+        return Content.objects.filter(lesson_id=self.kwargs['lesson_pk'])
     # permission_classes = [IsInstructorOrReadOnly]
+    def get_serializer_context(self):
+        return {'lesson_id':self.kwargs['lesson_pk']}
