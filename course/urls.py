@@ -6,19 +6,19 @@ from .views import CourseViewSet, ModuleViewSet, LessonViewSet, ContentViewSet
 
 # Create a router and register our viewsets with it
 router = DefaultRouter()
-router.register(r'courses', CourseViewSet)
+router.register('courses', CourseViewSet)
 
 # Nested router for module viewsets
-module_router = routers.NestedDefaultRouter(router, r'courses', lookup='course')
-module_router.register(r'modules', ModuleViewSet, basename='module')
+module_router = routers.NestedDefaultRouter(router, 'courses', lookup='course')
+module_router.register('modules', ModuleViewSet, basename='module')
 
 # Nested router for lesson viewsets
-lesson_router = routers.NestedDefaultRouter(module_router, r'modules', lookup='module')
-lesson_router.register(r'lessons', LessonViewSet, basename='lesson')
+lesson_router = routers.NestedDefaultRouter(module_router, 'modules', lookup='module')
+lesson_router.register('lessons', LessonViewSet, basename='lesson')
 
 # Nested router for content viewsets
-content_router = routers.NestedDefaultRouter(lesson_router, r'lessons', lookup='lesson')
-content_router.register(r'content', ContentViewSet, basename='content')
+content_router = routers.NestedDefaultRouter(lesson_router, 'lessons', lookup='lesson')
+content_router.register('content', ContentViewSet, basename='content')
 
 urlpatterns = [
     path('', include(router.urls)),
