@@ -28,16 +28,13 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class ModuleSerializer(serializers.ModelSerializer):
-    course = CourseSerializer()
-
     class Meta:
         model = Module
-        fields = ['id', 'title', 'description', 'course', 'order']
+        fields = ['id', 'title', 'description', 'order']
 
 
 class LessonSerializer(serializers.ModelSerializer):
     module = ModuleSerializer()
-
     class Meta:
         model = Lesson
         fields = ['id', 'title', 'description', 'module', 'order']

@@ -29,12 +29,12 @@ class CourseViewSet(viewsets.ModelViewSet):
     search_fields=['title','description','instructor__first_name','instructor__last_name']
     # permission_classes = [IsInstructorOrReadOnly]
 
-    @action(detail=True, methods=['get'])
-    def modules(self, request, pk=None):
-        course = self.get_object()
-        modules = course.module_set.all()
-        serializer = ModuleSerializer(modules, many=True)
-        return Response(serializer.data)
+    # @action(detail=True, methods=['get'])
+    # def modules(self, request, pk=None):
+    #     course = self.get_object()
+    #     modules = course.module_set.all()
+    #     serializer = ModuleSerializer(modules, many=True)
+    #     return Response(serializer.data)
 
 
 class ModuleViewSet(viewsets.ModelViewSet):
@@ -42,12 +42,8 @@ class ModuleViewSet(viewsets.ModelViewSet):
     serializer_class = ModuleSerializer
     # permission_classes = [IsInstructorOrReadOnly]
 
-    @action(detail=True, methods=['get'])
-    def lessons(self, request, pk=None):
-        module = self.get_object()
-        lessons = module.lesson_set.all()
-        serializer = LessonSerializer(lessons, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        return Module.objects.filter(course_id=self.kwargs['course_pk'])
 
 
 class LessonViewSet(viewsets.ModelViewSet):
