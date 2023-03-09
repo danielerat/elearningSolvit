@@ -30,6 +30,10 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = ['id', 'title', 'description', 'duration', 'instructor','module_set']
 
+    def create(self, validated_data):
+        instructor_id=self.context['instructor_id']
+        return Course.objects.create(instructor_id=instructor_id,**validated_data)
+
 
 class ModuleSerializer(serializers.ModelSerializer):
     

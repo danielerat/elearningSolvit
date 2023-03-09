@@ -27,6 +27,8 @@ class CourseViewSet(viewsets.ModelViewSet):
     filter_backends=[DjangoFilterBackend,SearchFilter]
     filterset_class=CourseFilter
     search_fields=['title','description','instructor__first_name','instructor__last_name']
+    def get_serializer_context(self):
+        return {'instructor_id':1}
     
 class ModuleViewSet(viewsets.ModelViewSet):
     serializer_class = ModuleSerializer

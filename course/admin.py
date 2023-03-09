@@ -19,7 +19,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 class ModuleAdmin(admin.ModelAdmin):
     inlines = [LessonInline]
-    list_display = ('title', 'course', 'order')
+    list_display = ('id','title', 'course', 'order')
     list_filter = ('course',)
     search_fields = ('title', 'description')
 
