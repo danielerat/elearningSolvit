@@ -5,6 +5,7 @@ from .models import Course, Module, Lesson, Content
 from .serializers import CourseSerializer, ModuleSerializer, LessonSerializer, ContentSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
+from course.filters import CourseFilter
 class IsInstructorOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow instructors to edit their courses.
@@ -24,6 +25,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     filter_backends=[DjangoFilterBackend,SearchFilter]
+    filterset_class=CourseFilter
     search_fields=['title','description','instructor__first_name','instructor__last_name']
     # permission_classes = [IsInstructorOrReadOnly]
 
