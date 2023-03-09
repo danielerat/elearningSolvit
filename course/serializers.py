@@ -7,14 +7,24 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
-
+# Simplified serializers for the Module
+class SimpleLessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Lesson
+        fields=["title"]
+# Simplified serializers for courses
+class SimpleModuleSerializer(serializers.ModelSerializer):
+    lesson_set=SimpleLessonSerializer(many=True,read_only=True)
+    class Meta:
+        model = Module
+        fields = ['title','lesson_set']
 
 class CourseSerializer(serializers.ModelSerializer):
     instructor = UserSerializer(read_only=True)
-
+    module_set=SimpleModuleSerializer(many=True,read_only=True)
     class Meta:
         model = Course
-        fields = ['id', 'title', 'description', 'duration', 'instructor']
+        fields = ['id', 'title', 'description', 'duration', 'instructor','module_set']
 
 
 class ModuleSerializer(serializers.ModelSerializer):
