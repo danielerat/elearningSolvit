@@ -25,7 +25,7 @@ class ModuleAdmin(admin.ModelAdmin):
 
 class LessonAdmin(admin.ModelAdmin):
     inlines = [ContentInline]
-    list_display = ('title', 'module', 'order')
+    list_display = ('id','title', 'module', 'order')
     list_filter = ('module__course', 'module')
     search_fields = ('title', 'description')
 

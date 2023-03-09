@@ -1,6 +1,6 @@
 
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,8 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
-    'course',
     "rest_framework",
+    'djoser',
+    'course',
 ]
 
 MIDDLEWARE = [
@@ -113,3 +114,26 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# Allow rest Rest framework to return integer as integer values
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+  
+    ),
+}
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('SOLVER',),
+   'ACCESS_TOKEN_LIFETIME':timedelta(days=5),
+   'REFRESH_TOKEN_LIFETIME':timedelta(days=10),
+}
+# Settings to override the default djoser serializer with our custom serializer(located in core)
+# DJOSER={
+#     'SERIALIZERS':{
+#         'user_create':'core.serializers.UserCreateSerializer',
+#         'current_user':'core.serializers.UserSerializer'
+#     }
+# }
